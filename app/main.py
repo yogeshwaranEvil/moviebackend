@@ -27,29 +27,29 @@ async def root():
         "version": "1.0.0",
         "timestamp": datetime.utcnow()
     }
-# Text search index setup
-# Text search index setup
-@app.on_event("startup")
-async def startup_db_client():
-    from app.database import db
+# # Text search index setup
+# # Text search index setup
+# @app.on_event("startup")
+# async def startup_db_client():
+#     from app.database import db
     
-    try:
-        # Drop existing text indexes first
-        await db.movies.drop_indexes()
-    except Exception:
-        # Index might not exist, which is fine
-        pass
+#     try:
+#         # Drop existing text indexes first
+#         await db.movies.drop_indexes()
+#     except Exception:
+#         # Index might not exist, which is fine
+#         pass
     
-    # Create new text index with explicit language_override that doesn't conflict
-    await db.movies.create_index(
-        [
-            ("title", "text"),
-            ("description", "text"),
-            ("directed_by", "text")
-        ],
-        language_override="lang_override"  # Using a field that doesn't exist in your docs
-    )
+#     # Create new text index with explicit language_override that doesn't conflict
+#     await db.movies.create_index(
+#         [
+#             ("title", "text"),
+#             ("description", "text"),
+#             ("directed_by", "text")
+#         ],
+#         language_override="lang_override"  # Using a field that doesn't exist in your docs
+#     )
     
-    # Create regular indexes for filtering
-    await db.movies.create_index("language")
-    await db.movies.create_index("genre")
+#     # Create regular indexes for filtering
+#     await db.movies.create_index("language")
+#     await db.movies.create_index("genre")
